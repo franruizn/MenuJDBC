@@ -55,7 +55,7 @@ public class ConexionMySQL {
            ResultSet rset=stmt.executeQuery(consulta);
            return rset;
        }
-    public int ejecutarInsertDeleteUpdate(String consulta) throws SQLException{
+    public int ejectutarIDU(String consulta) throws SQLException{
         Statement stmt=connection.createStatement();
         int fila=stmt.executeUpdate(consulta);
         return fila;
