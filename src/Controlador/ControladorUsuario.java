@@ -46,7 +46,7 @@ public class ControladorUsuario {
                 + user.getRol()+")";
         
         try {
-            con.ejectutarIDU(consulta);
+            con.ejecutarIDU(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,6 +56,6 @@ public class ControladorUsuario {
     
     public void borrarUsuario(Usuario user) throws SQLException, ClassNotFoundException{
         String consulta = "DELETE FROM usuario WHERE (idusuario = '"+user.getIdusuario()+"');";
-        con.ejectutarIDU(consulta);
+        con.ejecutarIDU(consulta);
     }
 }

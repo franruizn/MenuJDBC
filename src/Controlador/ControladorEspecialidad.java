@@ -41,7 +41,7 @@ public class ControladorEspecialidad {
         String consultaSQL = "INSERT INTO especialidad VALUES(" + especialidad.getIdespecialidad() + ",'" + especialidad.getNombre() + "')";
 
         try {
-            con.ejectutarIDU(consultaSQL);
+            con.ejecutarIDU(consultaSQL);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorEspecialidad.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,6 +49,6 @@ public class ControladorEspecialidad {
 
     public void borrarEspecialidad(Especialidad especialidad) throws SQLException, ClassNotFoundException {
         String consultaSQL = "DELETE FROM especialidad WHERE (idespecialidad = " + especialidad.getIdespecialidad() + ");";
-        con.ejectutarIDU(consultaSQL);
+        con.ejecutarIDU(consultaSQL);
     }
 }

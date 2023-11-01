@@ -50,7 +50,7 @@ public class ControladorConsulta {
                 + consulta.getFk_iddoctor() + "," + consulta.getFk_idtratamiento() + ",'" + consulta.getObservaciones() + "','" + formattedDate+"');";
 
         try {
-            con.ejectutarIDU(consultaSQL);
+            con.ejecutarIDU(consultaSQL);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,6 +58,6 @@ public class ControladorConsulta {
 
     public void borrarConsulta(Consulta consulta) throws SQLException, ClassNotFoundException {
         String consultaSQL = "DELETE FROM consulta WHERE (idconsulta = " + consulta.getIdconsulta() + ");";
-        con.ejectutarIDU(consultaSQL);
+        con.ejecutarIDU(consultaSQL);
     }
 }

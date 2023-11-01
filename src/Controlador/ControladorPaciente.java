@@ -42,7 +42,7 @@ public class ControladorPaciente {
         String consultaSQL = "INSERT INTO paciente VALUES(" + paciente.getIdpaciente()+ ",'" + paciente.getNombre() + "','" + paciente.getDni()+"')";
 
         try {
-            con.ejectutarIDU(consultaSQL);
+            con.ejecutarIDU(consultaSQL);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +50,6 @@ public class ControladorPaciente {
 
     public void borrarEspecialidad(Paciente paciente) throws SQLException, ClassNotFoundException {
         String consultaSQL = "DELETE FROM paciente WHERE (idpaciente = " + paciente.getIdpaciente() + ");";
-        con.ejectutarIDU(consultaSQL);
+        con.ejecutarIDU(consultaSQL);
     }
 }

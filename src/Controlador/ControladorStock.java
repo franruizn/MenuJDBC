@@ -46,7 +46,7 @@ public class ControladorStock {
                 + stock.getNombre()+ "'," + stock.getCantidad()+")";
         
         try {
-            con.ejectutarIDU(consulta);
+            con.ejecutarIDU(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorStock.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,6 +55,6 @@ public class ControladorStock {
     }
     public void borrarStock(Stock stock) throws SQLException, ClassNotFoundException{
         String consulta = "DELETE FROM stock WHERE (idstock = "+stock.getIdstock()+");";
-        con.ejectutarIDU(consulta);
+        con.ejecutarIDU(consulta);
     }
 }

@@ -46,7 +46,7 @@ public class ControladorTratamiento {
                 + trat.getNombre()+ "'," + trat.getPrecio()+")";
         
         try {
-            con.ejectutarIDU(consulta);
+            con.ejecutarIDU(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorTratamiento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,6 +55,6 @@ public class ControladorTratamiento {
     }
     public void borrarTratamiento(Tratamiento trat) throws SQLException, ClassNotFoundException{
         String consulta = "DELETE FROM tratamiento WHERE (idtratamiento = "+trat.getIdtratamiento()+");";
-        con.ejectutarIDU(consulta);
+        con.ejecutarIDU(consulta);
     }
 }

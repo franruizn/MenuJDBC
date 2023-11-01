@@ -45,7 +45,7 @@ public class ControladorFacturacion {
                 "," + factura.getPagado() + "," + factura.getPagar()+")";
 
         try {
-            con.ejectutarIDU(consultaSQL);
+            con.ejecutarIDU(consultaSQL);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorFacturacion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,7 +53,7 @@ public class ControladorFacturacion {
 
     public void borrarFactura(Facturacion factura) throws SQLException, ClassNotFoundException {
         String consultaSQL = "DELETE FROM facturacion WHERE (idfacturacion = " + factura.getIdfacturacion() + ");";
-        con.ejectutarIDU(consultaSQL);
+        con.ejecutarIDU(consultaSQL);
     }
     
 }

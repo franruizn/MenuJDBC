@@ -40,7 +40,7 @@ public class ControladorSolicitudes {
         String consulta = "INSERT INTO solicitudes VALUES(" + solicitudes.getIdsolicitudes() + ",'" + solicitudes.getFk_idconsulta() +  "')";
 
         try {
-            con.ejectutarIDU(consulta);
+            con.ejecutarIDU(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,6 +48,6 @@ public class ControladorSolicitudes {
     
     public void borrarSolicitudes(Solicitudes solicitudes) throws SQLException, ClassNotFoundException{
         String consulta = "DELETE FROM doctor WHERE (iddoctor = "+solicitudes.getIdsolicitudes()+");";
-        con.ejectutarIDU(consulta);
+        con.ejecutarIDU(consulta);
     }
 }

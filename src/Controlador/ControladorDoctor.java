@@ -44,7 +44,7 @@ public class ControladorDoctor {
                 + nuevoDoctor.getFk_idespecialidad() + ",'" + nuevoDoctor.getNombre() + "')";
 
         try {
-            con.ejectutarIDU(consulta);
+            con.ejecutarIDU(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,6 +52,6 @@ public class ControladorDoctor {
     
     public void borrarUsuario(Doctor doctor) throws SQLException, ClassNotFoundException{
         String consulta = "DELETE FROM doctor WHERE (iddoctor = "+doctor.getIddoctor()+");";
-        con.ejectutarIDU(consulta);
+        con.ejecutarIDU(consulta);
     }
 }
