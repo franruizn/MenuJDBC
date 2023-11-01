@@ -9,6 +9,7 @@ import java.sql.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,7 +26,6 @@ public class ControladorSQL {
     public void insertarDatos(String nombreTabla) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
-        
         
         String nombreColumnas = obtenerColumnas(nombreTabla);
 
@@ -51,6 +51,8 @@ public class ControladorSQL {
 
     public String obtenerColumnas(String nombreTabla) throws SQLException {
         String nombreColumnas = "";
+        cn.conectar();
+        metaDatos = cn.getConnection().getMetaData();
         ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
         while (rset.next()) {
             String nombreColumnaActual = rset.getString("COLUMN_NAME");
@@ -88,15 +90,21 @@ public class ControladorSQL {
         cn.desconectar();
     }
 
-    public void actualizarDatos(String nombreTabla) throws SQLException {
+    public DefaultTableModel cargarDatos(String nombreTabla, DefaultTableModel modeloDatos) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
         
-        String nombreColumnas = obtenerColumnas(nombreTabla);
-
-        String[] cadenaNombreColumnas = nombreColumnas.split(",");
+        ResultSet rset = cn.ejecutarSelect("SELECT * FROM " + nombreTabla);
         
+        while (rset.next()) {
+            modeloDatos.setRowCount(modeloDatos.getRowCount()+1);
+            for (int i = 0; i < modeloDatos.getColumnCount(); i++) {
+                modeloDatos.setValueAt(rset.getObject(i + 1), modeloDatos.getRowCount() - 1, i);
+            }
+        }
         
+        cn.desconectar();
+        return modeloDatos;
     }
     
     public void like() throws SQLException{

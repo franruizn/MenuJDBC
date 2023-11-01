@@ -4,7 +4,6 @@
  */
 package Vista;
 
-import Controlador.ConexionMySQL;
 import Controlador.ControladorSQL;
 import javax.swing.JOptionPane;
 import com.mysql.jdbc.DatabaseMetaData;
@@ -235,8 +234,8 @@ public class ConsultasGUI extends javax.swing.JFrame {
 
                     valido = true;
                     nombreColumnas = cn.obtenerColumnas(opcionesDialog[resultado]);
-                    ActualizarDatosGUI subframe = new ActualizarDatosGUI(nombreColumnas);
-                    subframe.setVisible(true);
+                    ActualizarDatosDiag dialogAct = new ActualizarDatosDiag(this,true,nombreColumnas,tablaElegida);
+                    dialogAct.setVisible(true);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(ConsultasGUI.class.getName()).log(Level.SEVERE, null, ex);
