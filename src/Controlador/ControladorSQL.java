@@ -9,6 +9,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -27,6 +28,8 @@ public class ControladorSQL {
 
     private ConexionMySQL cn = new ConexionMySQL();
     private DatabaseMetaData metaDatos;
+    private ArrayList<String> primaryKeyValue;
+    private String primaryKey;
 
     public ControladorSQL() {
     }
@@ -112,6 +115,22 @@ public class ControladorSQL {
                 modeloDatos.setValueAt(rset.getObject(i + 1), modeloDatos.getRowCount() - 1, i);
             }
         }
+        
+        ResultSet rs = metaDatos.getPrimaryKeys(null, null, nombreTabla);
+        primaryKey = "";
+        primaryKeyValue = new ArrayList<String>();
+        
+        while (rs.next()) {
+            primaryKey = rs.getString("COLUMN_NAME");
+        }
+
+        for (int i = 0; i < modeloDatos.getRowCount(); i++) {
+            for (int j = 0; j < modeloDatos.getColumnCount(); j++) {
+                if(modeloDatos.getColumnName(j).equals(primaryKey)){
+                    primaryKeyValue.add(modeloDatos.getValueAt(i, j).toString());
+                }
+            }
+        }
 
         cn.desconectar();
         return modeloDatos;
@@ -136,28 +155,17 @@ public class ControladorSQL {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
         ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
-        ResultSet rs = metaDatos.getPrimaryKeys(null, null, nombreTabla);
-        String primaryKey = "";
-        String primaryKeyValue = "";
-        while (rs.next()) {
-            primaryKey = rs.getString("COLUMN_NAME");
-        }
-
         String newValues = "";
+
         for (int i = 0; i < modeloDatos.getRowCount(); i++) {
             for (int j = 0; j < modeloDatos.getColumnCount(); j++) {
-                if (modeloDatos.getColumnName(j).equals(primaryKey)) {
-                    if (Integer.parseInt(modeloDatos.getValueAt(i, j).toString()) != 0) {
-                        primaryKeyValue = modeloDatos.getValueAt(i, j).toString();
-                        newValues += "'"+modeloDatos.getColumnName(j)+"'="+modeloDatos.getValueAt(i, j).toString() + ",";
-                    } else {
-                        primaryKeyValue = "'"+modeloDatos.getValueAt(i, j).toString()+"'";
-                        newValues += "'"+modeloDatos.getColumnName(j)+ "'='" + modeloDatos.getValueAt(i, j).toString() + "',";
-                    }
-                }
+
+                newValues += modeloDatos.getColumnName(j) + " ='" + modeloDatos.getValueAt(i, j).toString() + "',";
+
             }
             newValues = newValues.substring(0, newValues.length() - 1);
-            String consulta = "UPDATE " + nombreTabla + "SET " + newValues + "WHERE " + primaryKey + "=" + primaryKeyValue;
+            String consulta = "UPDATE " + nombreTabla.toLowerCase() + " SET " + newValues + " WHERE (" + primaryKey + "=" + primaryKeyValue.get(i) + ")";
+            System.out.println(consulta);
             cn.ejecutarIDU(consulta);
         }
 

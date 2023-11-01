@@ -103,7 +103,11 @@ public class ActualizarDatosDiag extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
+        try {
+            cn.actualizarDatos(modeloDatos, tablaElegida);
+        } catch (SQLException ex) {
+            Logger.getLogger(ActualizarDatosDiag.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
