@@ -94,6 +94,22 @@ public class ControladorSQL {
         
     }
     
+    public void like() throws SQLException{
+        cn.conectar();
+        String consulta = "select * FROM paciente where dni like '79%'";
+        cn.ejecutarIDU(consulta);
+    }
+    
+    public void join() throws SQLException{
+        cn.conectar();
+        String consulta = "SELECT rol from usuario JOIN doctor ON idusuario = fk_idusuario where iddoctor=2"; 
+        cn.ejecutarIDU(consulta);
+    }
    
+    public void groupBy() throws SQLException{
+        cn.conectar();
+        String consulta = "SELECT rol from usuario GROUP BY rol"; 
+        cn.ejecutarIDU(consulta);
+    }
 
 }
