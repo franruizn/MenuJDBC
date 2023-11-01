@@ -24,7 +24,7 @@ public class Consulta {
         this.fk_iddoctor = fk_iddoctor;
         this.fk_idtratamiento = fk_idtratamiento;
         this.observaciones = observaciones;
-        this.fecha = fecha;
+        this.fecha = new Date();
     }
 
     public int getIdconsulta() {

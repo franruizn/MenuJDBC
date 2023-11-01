@@ -10,13 +10,13 @@ import Controlador.ConexionMySQL;
  *
  * @author ivanf
  */
-public class ConsultasSQL extends javax.swing.JFrame {
+public class ConsultasGUI extends javax.swing.JFrame {
     
     private ConexionMySQL con;
     /**
      * Creates new form ConsultasSQL
      */
-    public ConsultasSQL(ConexionMySQL con) {
+    public ConsultasGUI(ConexionMySQL con) {
         this.con = con;
         initComponents();
         this.setResizable(false);
