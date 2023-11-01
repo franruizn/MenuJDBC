@@ -117,6 +117,7 @@ public class ControladorSQL {
         return modeloDatos;
     }
     
+
     public void like(JTable tabla1) throws SQLException {
         cn.conectar();
         String consulta = "select * FROM paciente where dni like '79%'";
@@ -130,13 +131,41 @@ public class ControladorSQL {
             row++;
             
         }
+    }
         
         
+
+    public DefaultTableModel actualizarDatos(DefaultTableModel modeloDatos, String nombreTabla) throws SQLException{
+        cn.conectar();
+        metaDatos = cn.getConnection().getMetaData();
+        ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
+        String newValues = "";
+        for(int i = 0; i < modeloDatos.getRowCount(); i++){
+            for(int j = 0; j < modeloDatos.getColumnCount();j++){
+                 if(Integer.parseInt(modeloDatos.getValueAt(i, j).toString()) != 0){
+                     newValues += modeloDatos.getValueAt(i, j).toString() + ",";
+                 } else {
+                     newValues += "'" + modeloDatos.getValueAt(i, j).toString() + "',";
+                 }
+            }
+        }
+        
+        
+        return modeloDatos;
+    }
+    
+    public void like() throws SQLException{
+        cn.conectar();
+        String consulta = "select * FROM paciente where dni like '79%'";
+        cn.ejecutarIDU(consulta);
+        cn.desconectar();
+
     }
     
     public void join(JTable tabla2) throws SQLException{
         cn.conectar();
         String consulta = "SELECT rol from usuario JOIN doctor ON idusuario = fk_idusuario where iddoctor=2"; 
+
         ResultSet rs=cn.ejecutarSelect(consulta);
         int row = 0;
         int column = 0;
@@ -145,11 +174,15 @@ public class ControladorSQL {
             row++;
         }
         
+        cn.ejecutarIDU(consulta);
+        cn.desconectar();
+
     }
    
     public void groupBy(JTable tabla3) throws SQLException{
         cn.conectar();
         String consulta = "SELECT rol from usuario GROUP BY rol"; 
+
         ResultSet rs=cn.ejecutarSelect(consulta);
         int row = 0;
         int column = 0;
@@ -157,6 +190,10 @@ public class ControladorSQL {
             tabla3.setValueAt(rs.getInt("rol"),row,column);
             row++;
         }
+
+        cn.ejecutarIDU(consulta);
+        cn.desconectar();
+
     }
 
 }
