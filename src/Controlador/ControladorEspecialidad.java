@@ -4,13 +4,10 @@
  */
 package Controlador;
 
-import Modelo.Consulta;
 import Modelo.Especialidad;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +16,10 @@ import java.util.logging.Logger;
  * @author franr
  */
 public class ControladorEspecialidad {
-    private ConexionMySQL con = new ConexionMySQL();
+    private ConexionMySQL con;
 
-    public ControladorEspecialidad() {
+    public ControladorEspecialidad(ConexionMySQL con) {
+        this.con = con;
     }
 
     public ArrayList<Especialidad> obtenerEspecialidades() throws SQLException { // Va a devolver un ArrayList de Jugadores
@@ -39,8 +37,7 @@ public class ControladorEspecialidad {
         return lista;
     }
 
-    public void insertarEspecialidad(Especialidad especialidad) {
-        
+    public void insertarEspecialidad(Especialidad especialidad) throws SQLException, ClassNotFoundException {
         String consultaSQL = "INSERT INTO especialidad VALUES(" + especialidad.getIdespecialidad() + ",'" + especialidad.getNombre() + "')";
 
         try {
@@ -50,8 +47,8 @@ public class ControladorEspecialidad {
         }
     }
 
-    public void borrarUsuario(Consulta consulta) throws SQLException, ClassNotFoundException {
-        String consultaSQL = "DELETE FROM doctor WHERE (iddoctor = " + consulta.getIdconsulta() + ");";
+    public void borrarEspecialidad(Especialidad especialidad) throws SQLException, ClassNotFoundException {
+        String consultaSQL = "DELETE FROM especialidad WHERE (idespecialidad = " + especialidad.getIdespecialidad() + ");";
         con.ejectutarIDU(consultaSQL);
     }
 }
