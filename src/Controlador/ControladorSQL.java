@@ -4,11 +4,15 @@
  */
 package Controlador;
 
+import Vista.ConsultasGUI;
 import java.sql.DatabaseMetaData;
 import java.sql.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -99,22 +103,46 @@ public class ControladorSQL {
         
     }
     
-    public void like() throws SQLException{
+    public void like(JTable tabla1) throws SQLException {
         cn.conectar();
         String consulta = "select * FROM paciente where dni like '79%'";
-        cn.ejecutarIDU(consulta);
+        ResultSet rs = cn.ejecutarSelect(consulta);
+        int row = 0;
+        int column = 0;
+        while (rs.next()) {
+            tabla1.setValueAt(rs.getInt("idpaciente"),row,column);
+            tabla1.setValueAt(rs.getString("nombre"),row,column+1);
+            tabla1.setValueAt(rs.getString("dni"),row,column+2);
+            row++;
+            
+        }
+        
+        
     }
     
-    public void join() throws SQLException{
+    public void join(JTable tabla2) throws SQLException{
         cn.conectar();
         String consulta = "SELECT rol from usuario JOIN doctor ON idusuario = fk_idusuario where iddoctor=2"; 
-        cn.ejecutarIDU(consulta);
+        ResultSet rs=cn.ejecutarSelect(consulta);
+        int row = 0;
+        int column = 0;
+        while (rs.next()) {
+            tabla2.setValueAt(rs.getInt("rol"),row,column);
+            row++;
+        }
+        
     }
    
-    public void groupBy() throws SQLException{
+    public void groupBy(JTable tabla3) throws SQLException{
         cn.conectar();
         String consulta = "SELECT rol from usuario GROUP BY rol"; 
-        cn.ejecutarIDU(consulta);
+        ResultSet rs=cn.ejecutarSelect(consulta);
+        int row = 0;
+        int column = 0;
+        while (rs.next()) {
+            tabla3.setValueAt(rs.getInt("rol"),row,column);
+            row++;
+        }
     }
 
 }
