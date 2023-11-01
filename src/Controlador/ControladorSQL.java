@@ -19,7 +19,6 @@ import javax.swing.JTable;
 
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author franr
@@ -35,8 +34,7 @@ public class ControladorSQL {
     public void insertarDatos(String nombreTabla) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
-        
-        
+
         String nombreColumnas = obtenerColumnas(nombreTabla);
 
         String[] cadenaNombreColumnas = nombreColumnas.split(",");
@@ -48,9 +46,11 @@ public class ControladorSQL {
             if (i < cadenaNombreColumnas.length - 1) {
                 nuevosValores += "'" + nuevoValor + "',";
             } else {
-                nuevosValores += "'" + nuevoValor + "'";
+                nuevosValores += "'" + nuevoValor + "',";
             }
         }
+
+        nuevosValores = nuevosValores.substring(0, nuevosValores.length() - 1);
 
         String consulta = "INSERT INTO " + nombreTabla + " (" + nombreColumnas + ") VALUES (" + nuevosValores + ")";
         cn.ejecutarIDU(consulta);
@@ -103,20 +103,19 @@ public class ControladorSQL {
     public DefaultTableModel cargarDatos(String nombreTabla, DefaultTableModel modeloDatos) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
-        
+
         ResultSet rset = cn.ejecutarSelect("SELECT * FROM " + nombreTabla);
-        
+
         while (rset.next()) {
-            modeloDatos.setRowCount(modeloDatos.getRowCount()+1);
+            modeloDatos.setRowCount(modeloDatos.getRowCount() + 1);
             for (int i = 0; i < modeloDatos.getColumnCount(); i++) {
                 modeloDatos.setValueAt(rset.getObject(i + 1), modeloDatos.getRowCount() - 1, i);
             }
         }
-        
+
         cn.desconectar();
         return modeloDatos;
     }
-    
 
     public void like(JTable tabla1) throws SQLException {
         cn.conectar();
@@ -125,69 +124,80 @@ public class ControladorSQL {
         int row = 0;
         int column = 0;
         while (rs.next()) {
-            tabla1.setValueAt(rs.getInt("idpaciente"),row,column);
-            tabla1.setValueAt(rs.getString("nombre"),row,column+1);
-            tabla1.setValueAt(rs.getString("dni"),row,column+2);
+            tabla1.setValueAt(rs.getInt("idpaciente"), row, column);
+            tabla1.setValueAt(rs.getString("nombre"), row, column + 1);
+            tabla1.setValueAt(rs.getString("dni"), row, column + 2);
             row++;
-            
+
         }
     }
-        
-        
 
-    public DefaultTableModel actualizarDatos(DefaultTableModel modeloDatos, String nombreTabla) throws SQLException{
+    public DefaultTableModel actualizarDatos(DefaultTableModel modeloDatos, String nombreTabla) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
         ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
-        String newValues = "";
-        for(int i = 0; i < modeloDatos.getRowCount(); i++){
-            for(int j = 0; j < modeloDatos.getColumnCount();j++){
-                 if(Integer.parseInt(modeloDatos.getValueAt(i, j).toString()) != 0){
-                     newValues += modeloDatos.getValueAt(i, j).toString() + ",";
-                 } else {
-                     newValues += "'" + modeloDatos.getValueAt(i, j).toString() + "',";
-                 }
-            }
+        ResultSet rs = metaDatos.getPrimaryKeys(null, null, nombreTabla);
+        String primaryKey = "";
+        String primaryKeyValue = "";
+        while (rs.next()) {
+            primaryKey = rs.getString("COLUMN_NAME");
         }
-        
-        
+
+        String newValues = "";
+        for (int i = 0; i < modeloDatos.getRowCount(); i++) {
+            for (int j = 0; j < modeloDatos.getColumnCount(); j++) {
+                if (modeloDatos.getColumnName(j).equals(primaryKey)) {
+                    if (Integer.parseInt(modeloDatos.getValueAt(i, j).toString()) != 0) {
+                        primaryKeyValue = modeloDatos.getValueAt(i, j).toString();
+                        newValues += "'"+modeloDatos.getColumnName(j)+"'="+modeloDatos.getValueAt(i, j).toString() + ",";
+                    } else {
+                        primaryKeyValue = "'"+modeloDatos.getValueAt(i, j).toString()+"'";
+                        newValues += "'"+modeloDatos.getColumnName(j)+ "'='" + modeloDatos.getValueAt(i, j).toString() + "',";
+                    }
+                }
+            }
+            newValues = newValues.substring(0, newValues.length() - 1);
+            String consulta = "UPDATE " + nombreTabla + "SET " + newValues + "WHERE " + primaryKey + "=" + primaryKeyValue;
+            cn.ejecutarIDU(consulta);
+        }
+
         return modeloDatos;
     }
-    
-    public void like() throws SQLException{
+
+    public void like() throws SQLException {
         cn.conectar();
         String consulta = "select * FROM paciente where dni like '79%'";
         cn.ejecutarIDU(consulta);
         cn.desconectar();
 
     }
-    
-    public void join(JTable tabla2) throws SQLException{
-        cn.conectar();
-        String consulta = "SELECT rol from usuario JOIN doctor ON idusuario = fk_idusuario where iddoctor=2"; 
 
-        ResultSet rs=cn.ejecutarSelect(consulta);
+    public void join(JTable tabla2) throws SQLException {
+        cn.conectar();
+        String consulta = "SELECT rol from usuario JOIN doctor ON idusuario = fk_idusuario where iddoctor=2";
+
+        ResultSet rs = cn.ejecutarSelect(consulta);
         int row = 0;
         int column = 0;
         while (rs.next()) {
-            tabla2.setValueAt(rs.getInt("rol"),row,column);
+            tabla2.setValueAt(rs.getInt("rol"), row, column);
             row++;
         }
-        
+
         cn.ejecutarIDU(consulta);
         cn.desconectar();
 
     }
-   
-    public void groupBy(JTable tabla3) throws SQLException{
-        cn.conectar();
-        String consulta = "SELECT rol from usuario GROUP BY rol"; 
 
-        ResultSet rs=cn.ejecutarSelect(consulta);
+    public void groupBy(JTable tabla3) throws SQLException {
+        cn.conectar();
+        String consulta = "SELECT rol from usuario GROUP BY rol";
+
+        ResultSet rs = cn.ejecutarSelect(consulta);
         int row = 0;
         int column = 0;
         while (rs.next()) {
-            tabla3.setValueAt(rs.getInt("rol"),row,column);
+            tabla3.setValueAt(rs.getInt("rol"), row, column);
             row++;
         }
 
