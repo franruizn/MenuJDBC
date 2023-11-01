@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +39,18 @@ public class ControladorDoctor {
     }
 
     public void insertarDoctor(Doctor nuevoDoctor) {
-        String consulta = "INSERT INTO doctor VALUES(" + nuevoDoctor.getIddoctor() + ",'" + nuevoDoctor.getFk_idusuario() + "'," 
-                + nuevoDoctor.getFk_idespecialidad() + ",'" + nuevoDoctor.getNombre() +"')";
+        String consulta = "INSERT INTO doctor VALUES(" + nuevoDoctor.getIddoctor() + ",'" + nuevoDoctor.getFk_idusuario() + "',"
+                + nuevoDoctor.getFk_idespecialidad() + ",'" + nuevoDoctor.getNombre() + "')";
+
+        try {
+            con.ejectutarIDU(consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void borrarUsuario(Doctor doctor) throws SQLException, ClassNotFoundException{
+        String consulta = "DELETE FROM doctor WHERE (iddoctor = "+doctor.getIddoctor()+");";
+        con.ejectutarIDU(consulta);
     }
 }

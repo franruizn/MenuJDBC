@@ -4,18 +4,21 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author ivanf
  */
 public class Consulta {
     private int idconsulta, fk_idpaciente, fk_iddoctor, fk_idtratamiento;
-    private String observaciones, fecha;
+    private String observaciones;
+    private Date fecha;
 
     public Consulta() {
     }
 
-    public Consulta(int idconsulta, int fk_idpaciente, int fk_iddoctor, int fk_idtratamiento, String observaciones, String fecha) {
+    public Consulta(int idconsulta, int fk_idpaciente, int fk_iddoctor, int fk_idtratamiento, String observaciones, Date fecha) {
         this.idconsulta = idconsulta;
         this.fk_idpaciente = fk_idpaciente;
         this.fk_iddoctor = fk_iddoctor;
@@ -64,11 +67,11 @@ public class Consulta {
         this.observaciones = observaciones;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
     
