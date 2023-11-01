@@ -15,6 +15,8 @@ public class ConsultasSQL extends javax.swing.JFrame {
      */
     public ConsultasSQL() {
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -146,7 +148,9 @@ public class ConsultasSQL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
+        InicioGUI Inicio = new InicioGUI();
+        Inicio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton14ActionPerformed
 
     /**
