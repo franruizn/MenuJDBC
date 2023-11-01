@@ -6,6 +6,9 @@ package Vista;
 
 import Controlador.ConexionMySQL;
 import Controlador.ControladorSQL;
+import javax.swing.JOptionPane;
+import com.mysql.jdbc.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -140,10 +143,11 @@ public class ConsultasGUI extends javax.swing.JFrame {
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(jButton14))
         );
@@ -157,14 +161,20 @@ public class ConsultasGUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton14ActionPerformed
 
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
         while (!valido) {
-            String tablaElegida =(JOptionPane.showInputDialog(null,"Selecciona la tabla en la que insertar", "Elegir",JOptionPane.QUESTION_MESSAGE,null,opcionesDialog, opcionesDialog[0])).toString();
+            String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que insertar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
-            for(int i = 0; i < opcionesDialog.length; i++){
-                if(opcionesDialog[i].equals(tablaElegida)){
+            for (int i = 0; i < opcionesDialog.length; i++) {
+                if (opcionesDialog[i].equals(tablaElegida)) {
                     resultado = i;
                 }
             }
@@ -185,10 +195,10 @@ public class ConsultasGUI extends javax.swing.JFrame {
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
         while (!valido) {
-            String tablaElegida =(JOptionPane.showInputDialog(null,"Selecciona la tabla en la que eliminar", "Elegir",JOptionPane.QUESTION_MESSAGE,null,opcionesDialog, opcionesDialog[0])).toString();
+            String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que eliminar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
-            for(int i = 0; i < opcionesDialog.length; i++){
-                if(opcionesDialog[i].equals(tablaElegida)){
+            for (int i = 0; i < opcionesDialog.length; i++) {
+                if (opcionesDialog[i].equals(tablaElegida)) {
                     resultado = i;
                 }
             }
@@ -208,19 +218,29 @@ public class ConsultasGUI extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
+        String nombreColumnas = "";
         while (!valido) {
-            String tablaElegida =(JOptionPane.showInputDialog(null,"Selecciona la tabla en la que eliminar", "Elegir",JOptionPane.QUESTION_MESSAGE,null,opcionesDialog, opcionesDialog[0])).toString();
+            String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que eliminar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
-            for(int i = 0; i < opcionesDialog.length; i++){
-                if(opcionesDialog[i].equals(tablaElegida)){
+            for (int i = 0; i < opcionesDialog.length; i++) {
+                if (opcionesDialog[i].equals(tablaElegida)) {
                     resultado = i;
                 }
             }
             if (resultado < 0) {
                 JOptionPane.showMessageDialog(null, "La tabla seleccionada no es correcta, por favor, selecciona una tabla valida");
             } else {
-                valido = true;
-                
+
+                try {
+
+                    valido = true;
+                    nombreColumnas = cn.obtenerColumnas(opcionesDialog[resultado]);
+                    ActualizarDatosGUI subframe = new ActualizarDatosGUI(nombreColumnas);
+                    subframe.setVisible(true);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConsultasGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_btnActualizarActionPerformed

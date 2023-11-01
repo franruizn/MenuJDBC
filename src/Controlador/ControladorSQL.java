@@ -25,11 +25,9 @@ public class ControladorSQL {
     public void insertarDatos(String nombreTabla) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
-
-        ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
-        String nombreColumnas = "";
         
-        nombreColumnas = obtenerColumnas(rset, nombreColumnas);
+        
+        String nombreColumnas = obtenerColumnas(nombreTabla);
 
         String[] cadenaNombreColumnas = nombreColumnas.split(",");
         String nuevosValores = "";
@@ -51,7 +49,9 @@ public class ControladorSQL {
         cn.desconectar();
     }
 
-    public String obtenerColumnas(ResultSet rset, String nombreColumnas) throws SQLException {
+    public String obtenerColumnas(String nombreTabla) throws SQLException {
+        String nombreColumnas = "";
+        ResultSet rset = metaDatos.getColumns(null, null, nombreTabla, null);
         while (rset.next()) {
             String nombreColumnaActual = rset.getString("COLUMN_NAME");
             nombreColumnas += nombreColumnaActual + ",";
@@ -91,6 +91,11 @@ public class ControladorSQL {
     public void actualizarDatos(String nombreTabla) throws SQLException {
         cn.conectar();
         metaDatos = cn.getConnection().getMetaData();
+        
+        String nombreColumnas = obtenerColumnas(nombreTabla);
+
+        String[] cadenaNombreColumnas = nombreColumnas.split(",");
+        
         
     }
     
