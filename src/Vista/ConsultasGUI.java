@@ -5,9 +5,6 @@
 package Vista;
 
 import Controlador.ControladorSQL;
-import javax.swing.JOptionPane;
-import com.mysql.jdbc.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
