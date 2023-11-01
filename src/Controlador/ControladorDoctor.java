@@ -30,10 +30,10 @@ public class ControladorDoctor {
         ResultSet rset = con.ejecutarSelect(consulta);
         while (rset.next()) {
             int iddoctor = rset.getInt("iddoctor");
-            int fk_especialidad = rset.getInt("fk_especialidad");
+            int fk_idespecialidad = rset.getInt("fk_idespecialidad");
             String nombre = rset.getString("nombre");
             String fk_idusuario = rset.getString("fk_idusuario");
-            Doctor d = new Doctor(iddoctor, fk_especialidad, nombre, fk_idusuario);
+            Doctor d = new Doctor(iddoctor, fk_idespecialidad, nombre, fk_idusuario);
             lista.add(d);
         }
         return lista;
