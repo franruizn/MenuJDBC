@@ -71,7 +71,8 @@ public class ActualizarDatosDiag extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblDatos);
 
-        btnAceptar.setText("jButton1");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setActionCommand("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -105,6 +106,8 @@ public class ActualizarDatosDiag extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
             cn.actualizarDatos(modeloDatos, tablaElegida);
+            modeloDatos = cn.cargarDatos(tablaElegida, modeloDatos);
+            tblDatos.setModel(modeloDatos);
         } catch (SQLException ex) {
             Logger.getLogger(ActualizarDatosDiag.class.getName()).log(Level.SEVERE, null, ex);
         }

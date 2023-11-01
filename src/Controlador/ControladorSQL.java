@@ -108,7 +108,7 @@ public class ControladorSQL {
         metaDatos = cn.getConnection().getMetaData();
 
         ResultSet rset = cn.ejecutarSelect("SELECT * FROM " + nombreTabla);
-
+        modeloDatos.setRowCount(0);
         while (rset.next()) {
             modeloDatos.setRowCount(modeloDatos.getRowCount() + 1);
             for (int i = 0; i < modeloDatos.getColumnCount(); i++) {
@@ -158,6 +158,7 @@ public class ControladorSQL {
         String newValues = "";
 
         for (int i = 0; i < modeloDatos.getRowCount(); i++) {
+            newValues = "";
             for (int j = 0; j < modeloDatos.getColumnCount(); j++) {
 
                 newValues += modeloDatos.getColumnName(j) + " ='" + modeloDatos.getValueAt(i, j).toString() + "',";
@@ -211,7 +212,6 @@ public class ControladorSQL {
 
         cn.ejecutarIDU(consulta);
         cn.desconectar();
-
     }
 
 }
