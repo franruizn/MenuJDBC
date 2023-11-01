@@ -52,4 +52,8 @@ public class ControladorUsuario {
         
         con.desconectar();
     }
+    public void borrarUsuario(Usuario user) throws SQLException, ClassNotFoundException{
+        String consulta = "DELETE FROM doctor WHERE (idusuario = "+user.getIdusuario()+");";
+        con.ejectutarIDU(consulta);
+    }
 }
