@@ -10,12 +10,13 @@ package Modelo;
  */
 public class Tratamiento {
     private int idtratamiento, fk_idstock;
-    private String nombre, precio;
+    private String nombre;
+    private double precio;
 
     public Tratamiento() {
     }
 
-    public Tratamiento(int idtratamiento, int fk_idstock, String nombre, String precio) {
+    public Tratamiento(int idtratamiento, int fk_idstock, String nombre, double precio) {
         this.idtratamiento = idtratamiento;
         this.fk_idstock = fk_idstock;
         this.nombre = nombre;
@@ -46,11 +47,11 @@ public class Tratamiento {
         this.nombre = nombre;
     }
 
-    public String getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
     
