@@ -103,12 +103,12 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Consulta"/>
+        <Property name="text" type="java.lang.String" value="CONSULTA"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Doctor"/>
+        <Property name="text" type="java.lang.String" value="DOCTOR"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">

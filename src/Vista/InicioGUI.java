@@ -4,12 +4,18 @@
  */
 package Vista;
 
+import Controlador.ConexionMySQL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author franr
  */
 public class InicioGUI extends javax.swing.JFrame {
 
+    private ConexionMySQL con = new ConexionMySQL();
     /**
      * Creates new form InicioGUI
      */
@@ -57,6 +63,11 @@ public class InicioGUI extends javax.swing.JFrame {
         );
 
         jButton1.setText("CONECTARSE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("CONSULTAS");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +76,12 @@ public class InicioGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("DESCONECTARSE");
+        jButton3.setText("DESCONECTARSE Y SALIR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -111,10 +127,30 @@ public class InicioGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ConsultasSQL CSQL = new ConsultasSQL();
+        ConsultasGUI CSQL = new ConsultasGUI(con);
         CSQL.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            con.conectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(InicioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InicioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            con.desconectar();
+        } catch (SQLException ex) {
+            Logger.getLogger(InicioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

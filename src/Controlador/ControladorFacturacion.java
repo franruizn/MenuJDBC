@@ -47,7 +47,7 @@ public class ControladorFacturacion {
         try {
             con.ejectutarIDU(consultaSQL);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorFacturacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

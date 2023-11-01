@@ -43,7 +43,7 @@ public class ControladorEspecialidad {
         try {
             con.ejectutarIDU(consultaSQL);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorEspecialidad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

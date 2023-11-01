@@ -52,7 +52,7 @@ public class ControladorConsulta {
         try {
             con.ejectutarIDU(consultaSQL);
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorDoctor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
