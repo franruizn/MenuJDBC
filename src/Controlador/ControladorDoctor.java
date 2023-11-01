@@ -18,9 +18,10 @@ import java.util.logging.Logger;
  */
 public class ControladorDoctor {
 
-    private ConexionMySQL con = new ConexionMySQL();
+    private ConexionMySQL con;
 
-    public ControladorDoctor() {
+    public ControladorDoctor(ConexionMySQL con) {
+        this.con = con;
     }
 
     public ArrayList<Doctor> obtenerDoctores() throws SQLException { // Va a devolver un ArrayList de Jugadores

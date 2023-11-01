@@ -4,27 +4,28 @@
  */
 package Controlador;
 
-import Modelo.Doctor;
+
 import Modelo.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author ivanf
  */
 public class ControladorUsuario {
-    private ConexionMySQL con = new ConexionMySQL();
+    private ConexionMySQL con;
 
-    public ControladorUsuario() {
+    public ControladorUsuario(ConexionMySQL con) {
+        this.con = con;
     }
     
     public ArrayList<Usuario> obtenerUsuarios() throws SQLException, ClassNotFoundException { // Va a devolver un ArrayList de Jugadores
-        con.conectar();
+
         ArrayList<Usuario> lista = new ArrayList<>();
         String consulta = "SELECT * FROM usuario";
         ResultSet rset = con.ejecutarSelect(consulta);
@@ -35,12 +36,12 @@ public class ControladorUsuario {
             Usuario u = new Usuario(idusuario, pass, rol);
             lista.add(u);
         }
-        con.desconectar();
+
         return lista;
     }
     
     public void insertarUsuario(Usuario user) throws SQLException, ClassNotFoundException {
-        con.conectar();
+
         String consulta = "INSERT INTO usuario VALUES('" + user.getIdusuario() + "','" + user.getPass() + "'," 
                 + user.getRol()+")";
         
@@ -50,6 +51,11 @@ public class ControladorUsuario {
             Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        con.desconectar();
+
+    }
+    
+    public void borrarUsuario(Usuario user) throws SQLException, ClassNotFoundException{
+        String consulta = "DELETE FROM usuario WHERE (idusuario = '"+user.getIdusuario()+"');";
+        con.ejectutarIDU(consulta);
     }
 }

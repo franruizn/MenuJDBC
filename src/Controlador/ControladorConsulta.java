@@ -46,7 +46,7 @@ public class ControladorConsulta {
     public void insertarConsulta(Consulta consulta) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(consulta.getFecha());
-        String consultaSQL = "INSERT INTO doctor VALUES(" + consulta.getIdconsulta() + "," + consulta.getFk_idpaciente() + ","
+        String consultaSQL = "INSERT INTO consulta VALUES(" + consulta.getIdconsulta() + "," + consulta.getFk_idpaciente() + ","
                 + consulta.getFk_iddoctor() + "," + consulta.getFk_idtratamiento() + ",'" + consulta.getObservaciones() + "','" + formattedDate+"');";
 
         try {
@@ -56,8 +56,8 @@ public class ControladorConsulta {
         }
     }
 
-    public void borrarUsuario(Consulta consulta) throws SQLException, ClassNotFoundException {
-        String consultaSQL = "DELETE FROM doctor WHERE (iddoctor = " + consulta.getIdconsulta() + ");";
+    public void borrarConsulta(Consulta consulta) throws SQLException, ClassNotFoundException {
+        String consultaSQL = "DELETE FROM consulta WHERE (idconsulta = " + consulta.getIdconsulta() + ");";
         con.ejectutarIDU(consultaSQL);
     }
 }
