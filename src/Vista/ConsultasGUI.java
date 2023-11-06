@@ -11,15 +11,21 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ivanf
+ * La clase ConsultasGUI representa la interfaz de usuario para ejecutar diversas
+ * consultas y operaciones en una base de datos. Permite al usuario realizar acciones
+ * como inserción, eliminación, actualización, búsqueda, uniones y agrupaciones de datos.
+ * 
+ * Esta clase interactúa con un ControladorSQL para ejecutar operaciones en la base de datos
+ * y mostrar los resultados en tablas de interfaz gráfica.
+ * 
+ * @author fran
  */
 public class ConsultasGUI extends javax.swing.JFrame {
 
     private ControladorSQL cn = new ControladorSQL();
 
     /**
-     * Creates new form ConsultasSQL
+     * Constructor de la clase ConsultasGUI.
      */
     public ConsultasGUI() {
         initComponents();
@@ -270,7 +276,8 @@ public class ConsultasGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // Métodos de acción para los botones de la interfaz
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         InicioGUI Inicio = new InicioGUI();
         Inicio.setVisible(true);
@@ -282,13 +289,15 @@ public class ConsultasGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
-
+    
+    // Código para insertar datos en la base de datos
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
         while (!valido) {
             String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que insertar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
+            //Obtenemos la tabla elegida por el usuario
             for (int i = 0; i < opcionesDialog.length; i++) {
                 if (opcionesDialog[i].equals(tablaElegida)) {
                     resultado = i;
@@ -307,12 +316,14 @@ public class ConsultasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    // Código para eliminar datos en la base de datos
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
         while (!valido) {
             String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que eliminar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
+            //Obtenemos la tabla elegida por el usuario
             for (int i = 0; i < opcionesDialog.length; i++) {
                 if (opcionesDialog[i].equals(tablaElegida)) {
                     resultado = i;
@@ -331,10 +342,12 @@ public class ConsultasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    // Código para actualizar datos en la base de datos
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         String[] opcionesDialog = {"Usuario", "Doctor", "Paciente", "Especialidad", "Consulta", "Facturacion", "Proveedor", "Solicitudes", "Stock", "Tratamiento"};
         boolean valido = false;
         String nombreColumnas = "";
+        //Obtenemos la tabla elegida por el usuario
         while (!valido) {
             String tablaElegida = (JOptionPane.showInputDialog(null, "Selecciona la tabla en la que eliminar", "Elegir", JOptionPane.QUESTION_MESSAGE, null, opcionesDialog, opcionesDialog[0])).toString();
             int resultado = 0;
@@ -360,7 +373,8 @@ public class ConsultasGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
-
+    
+    // Código para realizar una búsqueda con el operador "LIKE"
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         try {
             cn.like(Tabla1);
@@ -369,6 +383,7 @@ public class ConsultasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    // Código para realizar una unión de tablas
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         try {
             cn.join(Tabla2);
@@ -377,6 +392,7 @@ public class ConsultasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    // Código para realizar una operación "GROUP BY"
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         try {
             cn.groupBy(Tabla3);
@@ -385,6 +401,7 @@ public class ConsultasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    // Referenciarse principalmente de la clase "ControladorSQL"
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla1;
